@@ -1,0 +1,495 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@400;500&display=swap');
+
+  .bb-root {
+    font-family: 'DM Sans', sans-serif;
+    background: #1a0a10;
+    color: #fdf0f4;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    margin: 0; padding: 0;
+  }
+
+  .bb-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 28px;
+    position: relative;
+    z-index: 10;
+    border-bottom: 1px solid rgba(229,162,182,0.15);
+  }
+  .bb-logo { display: flex; align-items: center; gap: 10px; }
+  .bb-logo img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 1.5px solid rgba(229,162,182,0.4); }
+  .bb-logo-text { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 700; color: #fdf0f4; line-height: 1.1; }
+  .bb-logo-sub { font-size: 11px; color: #e5a2b6; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; }
+  .bb-nav-links { display: flex; gap: 24px; align-items: center; }
+  .bb-nav-links a { color: #c98daa; text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; cursor: pointer; }
+  .bb-nav-links a:hover { color: #fdf0f4; }
+  .bb-order-btn {
+    background: #c4537a;
+    color: #fdf0f4;
+    border: none; border-radius: 100px;
+    padding: 10px 22px;
+    font-size: 14px; font-weight: 500; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.2s;
+    text-decoration: none; display: inline-block;
+  }
+  .bb-order-btn:hover { background: #d4647f; }
+
+  /* HERO */
+  .bb-hero {
+    position: relative;
+    min-height: 560px;
+    display: flex; align-items: center;
+    overflow: hidden;
+    padding: 50px 28px 70px;
+  }
+  .bb-hero-bg {
+    position: absolute; inset: 0;
+    background-image: url('https://d1w7312wesee68.cloudfront.net/fYxTP8r1fILnVVks_Qe_8VFXWXwGMCIYBa0rJjgEK18/ext:webp/quality:85/plain/s3://toast-sites-resources-prod/restaurantImages/be006978-d52b-4bda-9e27-cd22faeb405b/474208109_17860795758339427_3952778770853473456_n--17841470182783503-INSTAGRAM.jpg');
+    background-size: cover; background-position: center 30%;
+    filter: brightness(0.18) saturate(0.6);
+    z-index: 0;
+  }
+  .bb-hero-overlay {
+    position: absolute; inset: 0; z-index: 1;
+    background: radial-gradient(ellipse at 70% 40%, rgba(180,60,100,0.18) 0%, transparent 65%);
+  }
+  .bb-sakura-tree {
+    position: absolute;
+    right: -20px; bottom: 0;
+    width: 55%;
+    height: 100%;
+    z-index: 1;
+    overflow: visible;
+  }
+  .bb-hero-content { position: relative; z-index: 3; max-width: 460px; }
+  .bb-eyebrow {
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: #e5a2b6; font-weight: 500; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .bb-eyebrow::before { content: ''; display: block; width: 24px; height: 1px; background: #e5a2b6; }
+  .bb-hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 54px; font-weight: 700;
+    line-height: 1.05; color: #fdf0f4;
+    margin: 0 0 18px;
+  }
+  .bb-hero h1 em { font-style: italic; color: #f0849e; }
+  .bb-hero p { font-size: 16px; color: #c98daa; line-height: 1.65; margin: 0 0 30px; }
+  .bb-hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .bb-btn-primary {
+    background: #c4537a; color: #fdf0f4;
+    border: none; border-radius: 100px;
+    padding: 13px 28px; font-size: 15px; font-weight: 500;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: background 0.2s; text-decoration: none;
+  }
+  .bb-btn-primary:hover { background: #d4647f; }
+  .bb-btn-secondary {
+    background: transparent; color: #fdf0f4;
+    border: 1.5px solid rgba(229,162,182,0.35); border-radius: 100px;
+    padding: 13px 28px; font-size: 15px; font-weight: 500;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s; text-decoration: none;
+  }
+  .bb-btn-secondary:hover { border-color: rgba(229,162,182,0.8); }
+
+  /* falling petals */
+  .petal {
+    position: fixed;
+    top: -30px;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    animation: petalFall linear infinite;
+  }
+  @keyframes petalFall {
+    0%   { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; }
+    8%   { opacity: 0.85; }
+    90%  { opacity: 0.6; }
+    100% { transform: translateY(110vh) rotate(720deg) translateX(60px); opacity: 0; }
+  }
+
+  /* SECTIONS */
+  .bb-section-label {
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: #c4537a; font-weight: 500; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .bb-section-label::before { content: '✿'; font-size: 10px; }
+
+  .bb-bestsellers { background: #120610; padding: 60px 28px; }
+  .bb-bestsellers h2 {
+    font-family: 'Fraunces', serif; font-size: 36px; font-weight: 700;
+    color: #fdf0f4; margin: 0 0 8px;
+  }
+  .bb-bestsellers-sub { font-size: 15px; color: #c98daa; margin: 0 0 32px; }
+  .bb-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px;
+  }
+  .bb-card {
+    background: #1e0c14;
+    border-radius: 18px; overflow: hidden;
+    border: 1px solid rgba(196,83,122,0.22);
+    transition: transform 0.25s, border-color 0.25s;
+  }
+  .bb-card:hover { transform: translateY(-5px); border-color: rgba(196,83,122,0.6); }
+  .bb-card img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+  .bb-card-body { padding: 14px 16px 18px; }
+  .bb-card-title { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 600; color: #fdf0f4; margin: 0 0 5px; line-height: 1.2; }
+  .bb-card-tag { font-size: 11px; color: #c4537a; text-transform: uppercase; letter-spacing: 0.1em; }
+
+  .bb-divider { border: none; border-top: 1px solid rgba(196,83,122,0.15); margin: 0; }
+
+  /* ABOUT */
+  .bb-about {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 48px; align-items: center;
+    padding: 60px 28px;
+    background: #1a0a10;
+  }
+  .bb-about-text p { font-size: 16px; line-height: 1.75; color: #c98daa; margin: 0 0 20px; }
+  .bb-about h2 { font-family: 'Fraunces', serif; font-size: 32px; font-weight: 700; color: #fdf0f4; margin: 0 0 20px; line-height: 1.15; }
+  .bb-about-img { border-radius: 22px; overflow: hidden; aspect-ratio: 4/5; }
+  .bb-about-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* REVIEWS */
+  .bb-reviews { background: #120610; padding: 60px 28px; }
+  .bb-reviews h2 { font-family: 'Fraunces', serif; font-size: 36px; font-weight: 700; color: #fdf0f4; margin: 0 0 6px; }
+  .bb-rating-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 30px; }
+  .bb-rating-num { font-family: 'Fraunces', serif; font-size: 64px; font-weight: 700; color: #fdf0f4; line-height: 1; }
+  .bb-rating-label { font-size: 14px; color: #c98daa; }
+  .bb-reviews-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .bb-review-card {
+    background: #1e0c14; border-radius: 16px; padding: 22px;
+    border: 1px solid rgba(196,83,122,0.2);
+  }
+  .bb-stars { color: #e5a2b6; font-size: 15px; letter-spacing: 3px; margin-bottom: 12px; }
+  .bb-review-text { font-size: 14px; line-height: 1.65; color: #c98daa; margin: 0 0 14px; font-style: italic; }
+  .bb-reviewer { font-size: 13px; font-weight: 500; color: #fdf0f4; }
+  .bb-review-date { font-size: 12px; color: rgba(201,141,170,0.55); margin-top: 2px; }
+
+  /* INFO */
+  .bb-info {
+    padding: 60px 28px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 48px; align-items: start;
+    background: #1a0a10;
+  }
+  .bb-info h2 { font-family: 'Fraunces', serif; font-size: 28px; color: #fdf0f4; margin: 0 0 22px; }
+  .bb-info-row { display: flex; gap: 14px; margin-bottom: 18px; align-items: flex-start; }
+  .bb-info-icon { color: #f0849e; font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+  .bb-info-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: #c4537a; margin-bottom: 3px; }
+  .bb-info-value { font-size: 15px; color: #fdf0f4; line-height: 1.5; }
+  .bb-info-value a { color: #f0849e; text-decoration: none; }
+  .bb-hours-table { width: 100%; }
+  .bb-hours-table tr td { font-size: 14px; color: #c98daa; padding: 5px 0; border-bottom: 1px solid rgba(196,83,122,0.08); }
+  .bb-hours-table tr td:last-child { text-align: right; color: #fdf0f4; }
+  .bb-hours-note { font-size: 12px; color: rgba(201,141,170,0.5); margin-top: 14px; }
+
+  /* FOOTER */
+  .bb-footer {
+    background: #0d0608;
+    padding: 28px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+    border-top: 1px solid rgba(196,83,122,0.15);
+  }
+  .bb-footer-copy { font-size: 13px; color: rgba(201,141,170,0.5); }
+  .bb-footer-links { display: flex; gap: 20px; }
+  .bb-footer-links a { font-size: 13px; color: rgba(201,141,170,0.7); text-decoration: none; }
+  .bb-footer-links a:hover { color: #fdf0f4; }
+
+  @media (max-width: 560px) {
+    .bb-about, .bb-info { grid-template-columns: 1fr; }
+    .bb-hero h1 { font-size: 36px; }
+    .bb-sakura-tree { width: 100%; opacity: 0.3; }
+  }
+</style>
+
+<div class="bb-root">
+
+  <nav class="bb-nav">
+    <div class="bb-logo">
+      <img src="https://d1w7312wesee68.cloudfront.net/restaurantImages/be006978-d52b-4bda-9e27-cd22faeb405b/BubbleBayLogo.png" alt="Bubble Bay logo">
+      <div>
+        <div class="bb-logo-text">Bubble Bay</div>
+        <div class="bb-logo-sub">Boba · Faribault, MN</div>
+      </div>
+    </div>
+    <div class="bb-nav-links">
+      <a href="https://bubblebayboba.com/menu" target="_blank">Menu</a>
+      <a href="#about">About</a>
+      <a href="#visit">Visit</a>
+      <a href="https://bubblebayboba.com/order" target="_blank" class="bb-order-btn">Order online</a>
+    </div>
+  </nav>
+
+  <section class="bb-hero">
+    <div class="bb-hero-bg"></div>
+    <div class="bb-hero-overlay"></div>
+
+    <svg class="bb-sakura-tree" viewBox="0 0 500 560" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g opacity="0.85">
+        <!-- trunk -->
+        <path d="M250 560 Q245 480 240 420 Q235 360 250 300" stroke="#4a1a28" stroke-width="18" fill="none" stroke-linecap="round"/>
+        <!-- main branches -->
+        <path d="M248 420 Q210 390 160 340 Q130 310 90 280" stroke="#4a1a28" stroke-width="10" fill="none" stroke-linecap="round"/>
+        <path d="M244 380 Q280 350 320 300 Q350 270 390 240" stroke="#4a1a28" stroke-width="9" fill="none" stroke-linecap="round"/>
+        <path d="M246 340 Q220 310 200 270 Q185 245 175 210" stroke="#3d1520" stroke-width="7" fill="none" stroke-linecap="round"/>
+        <path d="M247 360 Q270 330 300 290 Q320 265 340 230" stroke="#3d1520" stroke-width="7" fill="none" stroke-linecap="round"/>
+        <path d="M160 340 Q140 300 120 260" stroke="#3d1520" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M390 240 Q410 210 420 175" stroke="#3d1520" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <!-- sub branches -->
+        <path d="M175 210 Q155 185 130 160" stroke="#3d1520" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M175 210 Q195 185 210 155" stroke="#3d1520" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <path d="M340 230 Q360 200 370 165" stroke="#3d1520" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M340 230 Q320 200 315 165" stroke="#3d1520" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <path d="M120 260 Q100 235 80 210" stroke="#3d1520" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M420 175 Q435 145 440 115" stroke="#3d1520" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+        <!-- blossom clusters — petal groups using ellipses -->
+        <!-- cluster 1 -->
+        <g opacity="0.9">
+          <ellipse cx="120" cy="245" rx="30" ry="22" fill="#e8a0b8" transform="rotate(-20,120,245)"/>
+          <ellipse cx="95" cy="258" rx="22" ry="16" fill="#f2bfcf" transform="rotate(15,95,258)"/>
+          <ellipse cx="138" cy="228" rx="20" ry="14" fill="#fad4e0" transform="rotate(-40,138,228)"/>
+          <ellipse cx="108" cy="228" rx="18" ry="13" fill="#e8a0b8" transform="rotate(5,108,228)"/>
+        </g>
+        <!-- cluster 2 -->
+        <g opacity="0.9">
+          <ellipse cx="385" cy="228" rx="32" ry="24" fill="#e8a0b8" transform="rotate(15,385,228)"/>
+          <ellipse cx="410" cy="215" rx="24" ry="17" fill="#f2bfcf" transform="rotate(-10,410,215)"/>
+          <ellipse cx="368" cy="212" rx="20" ry="15" fill="#fad4e0" transform="rotate(30,368,212)"/>
+          <ellipse cx="400" cy="238" rx="18" ry="13" fill="#dba0be" transform="rotate(-5,400,238)"/>
+        </g>
+        <!-- cluster 3 -->
+        <g opacity="0.85">
+          <ellipse cx="170" cy="200" rx="28" ry="20" fill="#f2bfcf" transform="rotate(-30,170,200)"/>
+          <ellipse cx="145" cy="188" rx="22" ry="16" fill="#e8a0b8" transform="rotate(10,145,188)"/>
+          <ellipse cx="188" cy="185" rx="18" ry="13" fill="#fad4e0" transform="rotate(-15,188,185)"/>
+          <ellipse cx="155" cy="210" rx="16" ry="12" fill="#dba0be" transform="rotate(20,155,210)"/>
+        </g>
+        <!-- cluster 4 -->
+        <g opacity="0.85">
+          <ellipse cx="340" cy="220" rx="26" ry="20" fill="#e8a0b8" transform="rotate(20,340,220)"/>
+          <ellipse cx="315" cy="210" rx="22" ry="15" fill="#f2bfcf" transform="rotate(-15,315,210)"/>
+          <ellipse cx="358" cy="205" rx="18" ry="13" fill="#fad4e0" transform="rotate(10,358,205)"/>
+        </g>
+        <!-- cluster 5 top left -->
+        <g opacity="0.8">
+          <ellipse cx="120" cy="155" rx="30" ry="22" fill="#fad4e0" transform="rotate(-10,120,155)"/>
+          <ellipse cx="98" cy="143" rx="22" ry="16" fill="#e8a0b8" transform="rotate(20,98,143)"/>
+          <ellipse cx="140" cy="140" rx="18" ry="13" fill="#f2bfcf" transform="rotate(-30,140,140)"/>
+          <ellipse cx="108" cy="170" rx="16" ry="12" fill="#dba0be" transform="rotate(5,108,170)"/>
+        </g>
+        <!-- cluster 6 top right -->
+        <g opacity="0.8">
+          <ellipse cx="425" cy="108" rx="30" ry="22" fill="#e8a0b8" transform="rotate(12,425,108)"/>
+          <ellipse cx="448" cy="95" rx="22" ry="16" fill="#fad4e0" transform="rotate(-20,448,95)"/>
+          <ellipse cx="408" cy="93" rx="18" ry="14" fill="#f2bfcf" transform="rotate(25,408,93)"/>
+          <ellipse cx="440" cy="120" rx="17" ry="12" fill="#dba0be" transform="rotate(-5,440,120)"/>
+        </g>
+        <!-- cluster 7 mid -->
+        <g opacity="0.75">
+          <ellipse cx="200" cy="148" rx="25" ry="18" fill="#f2bfcf" transform="rotate(-25,200,148)"/>
+          <ellipse cx="220" cy="132" rx="20" ry="14" fill="#e8a0b8" transform="rotate(10,220,132)"/>
+          <ellipse cx="182" cy="133" rx="17" ry="12" fill="#fad4e0" transform="rotate(-10,182,133)"/>
+        </g>
+        <!-- cluster 8 far right mid -->
+        <g opacity="0.75">
+          <ellipse cx="365" cy="158" rx="25" ry="18" fill="#f2bfcf" transform="rotate(18,365,158)"/>
+          <ellipse cx="380" cy="140" rx="20" ry="14" fill="#e8a0b8" transform="rotate(-12,380,140)"/>
+          <ellipse cx="350" cy="142" rx="17" ry="12" fill="#fad4e0" transform="rotate(8,350,142)"/>
+        </g>
+        <!-- small accent blossoms scattered -->
+        <circle cx="77" cy="200" r="8" fill="#fad4e0" opacity="0.7"/>
+        <circle cx="67" cy="192" r="6" fill="#e8a0b8" opacity="0.6"/>
+        <circle cx="460" cy="130" r="8" fill="#fad4e0" opacity="0.7"/>
+        <circle cx="472" cy="120" r="6" fill="#e8a0b8" opacity="0.6"/>
+        <circle cx="237" cy="118" r="9" fill="#f2bfcf" opacity="0.65"/>
+        <circle cx="260" cy="108" r="7" fill="#e8a0b8" opacity="0.6"/>
+        <circle cx="295" cy="158" r="8" fill="#fad4e0" opacity="0.65"/>
+      </g>
+    </svg>
+
+    <div class="bb-hero-content">
+      <div class="bb-eyebrow">Handcrafted in Faribault, MN</div>
+      <h1>Life's better <em>in bloom</em></h1>
+      <p>Bubble teas, fruit teas, milk teas — made fresh with real ingredients, served under falling petals.</p>
+      <div class="bb-hero-btns">
+        <a href="https://bubblebayboba.com/order" target="_blank" class="bb-btn-primary">Order now</a>
+        <a href="https://bubblebayboba.com/menu" target="_blank" class="bb-btn-secondary">View menu</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bb-bestsellers">
+    <div class="bb-section-label">Our favorites</div>
+    <h2>Best sellers</h2>
+    <p class="bb-bestsellers-sub">A few things people keep coming back for.</p>
+    <div class="bb-cards">
+      <div class="bb-card">
+        <img src="https://d1w7312wesee68.cloudfront.net/U9D7whvZqUgNvTLcnDYlt3vBgS3D-RmIHgOzEPJHsPk/ext:webp/quality:85/c:880:928:ce:0:0/plain/s3://toast-sites-resources-prod/restaurantImages/be006978-d52b-4bda-9e27-cd22faeb405b/Screenshot20250724at115651AM.png" alt="Brown Sugar boba">
+        <div class="bb-card-body">
+          <div class="bb-card-title">Brown Sugar</div>
+          <div class="bb-card-tag">Customer favorite</div>
+        </div>
+      </div>
+      <div class="bb-card">
+        <img src="https://d1w7312wesee68.cloudfront.net/xJ3QBVqCmmyMy5fv5x_TvRt6PzG1Ku03vdnBAStj4jo/ext:webp/quality:85/c:3022:2648:ce:505:48/plain/s3://toast-sites-resources-prod/restaurantImages/be006978-d52b-4bda-9e27-cd22faeb405b/IMG_0803.JPG" alt="Strawberry Matcha">
+        <div class="bb-card-body">
+          <div class="bb-card-title">Strawberry Matcha</div>
+          <div class="bb-card-tag">Seasonal special</div>
+        </div>
+      </div>
+      <div class="bb-card">
+        <img src="https://d1w7312wesee68.cloudfront.net/jDybjQcpLlGeiHHVSnpup-G6fRMgsJ_KDrPmKHYZT-8/ext:webp/quality:85/c:900:1266:ce:0:-167/plain/s3://toast-sites-resources-prod/restaurantImages/be006978-d52b-4bda-9e27-cd22faeb405b/4ac4ff6f0c9a4bbe854ba3fba2328026.JPG" alt="Honeydew with Strawberry Foam">
+        <div class="bb-card-body">
+          <div class="bb-card-title">Honeydew + Strawberry Foam</div>
+          <div class="bb-card-tag">Fan pick</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="bb-divider">
+
+  <section class="bb-about" id="about">
+    <div class="bb-about-img">
+      <img src="https://d1w7312wesee68.cloudfront.net/fYxTP8r1fILnVVks_Qe_8VFXWXwGMCIYBa0rJjgEK18/ext:webp/quality:85/plain/s3://toast-sites-resources-prod/restaurantImages/be006978-d52b-4bda-9e27-cd22faeb405b/474208109_17860795758339427_3952778770853473456_n--17841470182783503-INSTAGRAM.jpg" alt="Inside Bubble Bay">
+    </div>
+    <div class="bb-about-text">
+      <div class="bb-section-label">Our story</div>
+      <h2>A little shop with a lot of heart</h2>
+      <p>Bubble Bay was born from a love of bold flavors and good vibes. Tucked in Faribault, we're your neighborhood spot for handcrafted bubble teas made with fresh ingredients — no shortcuts, ever.</p>
+      <p>Whether it's your first boba or you're a seasoned pearl connoisseur, we'll make something you'll want to come back for. Music's always solid, staff is always friendly.</p>
+      <a href="https://bubblebayboba.com/menu" target="_blank" class="bb-btn-primary" style="display:inline-block;">Explore the full menu</a>
+    </div>
+  </section>
+
+  <hr class="bb-divider">
+
+  <section class="bb-reviews">
+    <div class="bb-section-label">What people say</div>
+    <div class="bb-rating-row">
+      <span class="bb-rating-num">4.7</span>
+      <div>
+        <div style="color:#e5a2b6;font-size:18px;letter-spacing:3px;">★★★★★</div>
+        <span class="bb-rating-label">77 Google reviews</span>
+      </div>
+    </div>
+    <div class="bb-reviews-grid">
+      <div class="bb-review-card">
+        <div class="bb-stars">★★★★★</div>
+        <p class="bb-review-text">"Best coffee I've ever had. The Biscoff Latte was 20/10 and same with the Brown Sugar Espresso. Found my new forever favorite shop."</p>
+        <div class="bb-reviewer">Kat Rose</div>
+        <div class="bb-review-date">1 month ago</div>
+      </div>
+      <div class="bb-review-card">
+        <div class="bb-stars">★★★★★</div>
+        <p class="bb-review-text">"Absolutely delicious, great customer service, clean environment. Great prices, amazing taste."</p>
+        <div class="bb-reviewer">Google reviewer</div>
+        <div class="bb-review-date">Recent</div>
+      </div>
+      <div class="bb-review-card">
+        <div class="bb-stars">★★★★★</div>
+        <p class="bb-review-text">"Music is solid, staff both times were friendly and good vibes. Drinks look exactly like they do on Instagram."</p>
+        <div class="bb-reviewer">William Bishop</div>
+        <div class="bb-review-date">1 year ago</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bb-info" id="visit">
+    <div>
+      <div class="bb-section-label">Come find us</div>
+      <h2>Visit Bubble Bay</h2>
+      <div class="bb-info-row">
+        <i class="ti ti-map-pin bb-info-icon" aria-hidden="true"></i>
+        <div>
+          <div class="bb-info-label">Address</div>
+          <div class="bb-info-value"><a href="https://google.com/maps/place?q=Bubble+Bay%2C+1533+MN-60+W%2C+Faribault%2C+MN+55021" target="_blank">1533 MN-60 W<br>Faribault, MN 55021</a></div>
+        </div>
+      </div>
+      <div class="bb-info-row">
+        <i class="ti ti-phone bb-info-icon" aria-hidden="true"></i>
+        <div>
+          <div class="bb-info-label">Phone</div>
+          <div class="bb-info-value"><a href="tel:+15073238041">(507) 323-8041</a></div>
+        </div>
+      </div>
+      <div class="bb-info-row">
+        <i class="ti ti-brand-instagram bb-info-icon" aria-hidden="true"></i>
+        <div>
+          <div class="bb-info-label">Instagram</div>
+          <div class="bb-info-value"><a href="https://www.instagram.com/bubblebayboba/" target="_blank">@bubblebayboba</a></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="bb-section-label">Hours</div>
+      <h2>When we're open</h2>
+      <table class="bb-hours-table">
+        <tr><td>Monday</td><td>11 AM – 8 PM</td></tr>
+        <tr><td>Tuesday</td><td>11 AM – 8 PM</td></tr>
+        <tr><td>Wednesday</td><td>11 AM – 8 PM</td></tr>
+        <tr><td>Thursday</td><td>11 AM – 8 PM</td></tr>
+        <tr><td>Friday</td><td>11 AM – 9 PM</td></tr>
+        <tr><td>Saturday</td><td>12 PM – 9 PM</td></tr>
+        <tr><td>Sunday</td><td>12 PM – 7 PM</td></tr>
+      </table>
+      <p class="bb-hours-note">Hours may vary — check Google Maps for the latest.</p>
+    </div>
+  </section>
+
+  <footer class="bb-footer">
+    <div class="bb-footer-copy">© 2026 Bubble Bay Boba · Faribault, MN</div>
+    <div class="bb-footer-links">
+      <a href="https://bubblebayboba.com/menu" target="_blank">Menu</a>
+      <a href="https://bubblebayboba.com/order" target="_blank">Order online</a>
+      <a href="https://www.instagram.com/bubblebayboba/" target="_blank">Instagram</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  const petalColors = ['#f2bfcf','#e8a0b8','#fad4e0','#dba0be','#f8cfe0'];
+  const petalShapes = [
+    'M0,-8 C4,-8 8,-4 8,0 C8,4 4,8 0,8 C-4,8 -8,4 -8,0 C-8,-4 -4,-8 0,-8 Z',
+    'M0,-10 C3,-6 8,-4 6,0 C4,4 2,9 0,10 C-2,9 -4,4 -6,0 C-8,-4 -3,-6 0,-10 Z',
+    'M0,-9 C5,-7 9,-2 7,2 C5,6 1,9 0,9 C-1,9 -5,6 -7,2 C-9,-2 -5,-7 0,-9 Z'
+  ];
+
+  function spawnPetal() {
+    const el = document.createElement('div');
+    el.className = 'petal';
+    const size = 8 + Math.random() * 10;
+    const color = petalColors[Math.floor(Math.random() * petalColors.length)];
+    const shape = petalShapes[Math.floor(Math.random() * petalShapes.length)];
+    const left = Math.random() * 100;
+    const dur = 6 + Math.random() * 7;
+    const delay = Math.random() * 4;
+
+    el.innerHTML = `<svg width="${size*2}" height="${size*2}" viewBox="-12 -12 24 24" xmlns="http://www.w3.org/2000/svg"><path d="${shape}" fill="${color}" opacity="0.85"/></svg>`;
+    el.style.cssText = `left:${left}vw; animation-duration:${dur}s; animation-delay:${delay}s; width:${size*2}px; height:${size*2}px;`;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), (dur + delay + 1) * 1000);
+  }
+
+  for (let i = 0; i < 22; i++) setTimeout(spawnPetal, i * 350);
+  setInterval(spawnPetal, 700);
+</script>
